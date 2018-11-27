@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?><!-- was 3.4 originally -->
+<plugin>
+
+    <!-- Viewlets and categories-->
+    <extension
+            point="com.ibm.team.dashboard.common.viewlets">
+        <category
+                id="com.siemens.bt.jazz.viewlet.category.btaddons"
+                name="Project/Team"> <!--change this to have widget under different category-->
+        </category>
+        <viewlet
+                allow-remote="true"
+                applies-to="projects-and-teams"
+                closable="true"
+                collapsable="true"
+                dynamic-title="true"
+                editable="false"
+                gadgetable="true"
+                include-subteams="yes-and-check"
+                icon="resources/images/teamarea_obj.gif"
+                id="com.siemens.bt.jazz.viewlet.myteams"
+                title="My Teams"
+                widget="com.siemens.bt.jazz.viewlet.myteams.Team"
+                version="1.1"
+                scope-sensitive="true">
+            <preference-def
+                    default-value="true"
+                    id="rolesPref"
+                    name="Show Roles"
+                    type="boolean">
+                <description>
+                   Show roles after restart.
+                </description>
+            </preference-def>
+            <preference-def
+                    default-value="true"
+                    id="filterPref"
+                    name="Show my Teams"
+                    type="boolean">
+                <description>
+                    Show only my teams after restart.
+                </description>
+            </preference-def>
+        </viewlet>
+        <viewlet-entry
+                category="com.siemens.bt.jazz.viewlet.category.btaddons"
+                id="com.siemens.bt.jazz.viewlet.myteams.entry.Team"
+                icon="resources/images/teamarea_obj.gif"
+                title="My Teams"
+                non-jts="true"
+                repo-only="true"
+                preview="resources/images/PreviewWithTop.png"
+                viewlet-id="com.siemens.bt.jazz.viewlet.myteams">
+            <description>
+                The 'My Teams' widget shows the teams one is member of in the selected/active project area.
+                It also provides the same functionality as the Teams widget.
+            </description>
+        </viewlet-entry>
+    </extension>
+
+    <!-- CSS binding -->
+    <extension point="net.jazz.ajax.cssBindingSets">
+        <cssBindingSet id="com.siemens.bt.jazz.viewlet.myteams.css.bindings" path="/templates/">
+            <cssBinding jsModule="com.siemens.bt.jazz.viewlet.myteams.Team">
+                <cssModule path="Team.css"/>
+            </cssBinding>
+        </cssBindingSet>
+    </extension>
+
+    <!-- Web bundle marker
+    <prerequisites>
+            <requiredWebBundle id="net.jazz.ajax"/>
+            <requiredWebBundle id="net.jazz.web.ui"/>
+        </prerequisites> -->
+    <extension
+            point="net.jazz.ajax.webBundles">
+    </extension>
+</plugin>

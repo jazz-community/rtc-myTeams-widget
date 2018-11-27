@@ -1,0 +1,104 @@
+/* IDs */
+.absences-table-container {
+    position: absolute;
+}
+
+#about {
+    float: right;
+}
+
+.namesBar {
+    position: absolute;
+    left:0px;
+    display: inline-block;
+    overflow: hidden;
+    background-color: white;
+    z-index: 999;
+}
+
+.contentPane {
+    overflow:auto;
+    height: 300px;
+    position: relative;
+}
+
+/* Classes */
+
+
+.myTeam{
+    padding: 2px 4px 2px 3px;
+    display: flow-root;
+}
+
+.pseudoButton{
+    color: black;
+    border-left: black solid 1px;
+    padding: .1em .2em;
+
+}
+.pseudoButton:hover{
+    color: black;
+    background-color: #abd6ff;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 100%);
+    cursor: pointer;
+}
+
+.breaker {
+    background-color: WhiteSmoke;
+    font-weight: bold;
+}
+
+
+.teamIcon {
+    background-image: url("../images/teamarea_obj.gif");
+    height: 16px;
+    width: 16px;
+}
+
+.projectIcon {
+    background-image: url("../images/projectarea_obj.gif");
+    height: 16px;
+    width: 16px;
+}
+
+.right {
+    overflow: auto;
+}
+
+.roles{
+    color: #999999;
+
+    float: right;
+}
+
+.topMenu {
+    background-repeat: no-repeat;
+    background-color: #f5f5f5;
+    top: 0px;
+    left:0px;
+    width: 100%;
+    height: 17px;
+
+}
+
+.menuBar {
+    max-height: 20px;
+}
+
+.cornerMenu {
+    background-repeat: no-repeat;
+    background-color: #f5f5f5;
+    top: 0px;
+    left:0px;
+    width: 99%;
+    height: 20px;
+    border-bottom: 1px solid white;
+}
+
+.cMenuContent{
+    background-image: url("../images/teamarea_obj.gif");
+    background-color: gray;
+    width: 20px;
+    height: 20px;
+}
+

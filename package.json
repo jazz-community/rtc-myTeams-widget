@@ -1,0 +1,23 @@
+{
+  "name": "com.siemens.bt.jazz.viewlet.myteams",
+  "version": "1.0.0",
+  "description": "The 'My Teams' widget shows the teams one is member of in the selected/active project area. It also provides the same functionality as the Teams widget.",
+  "scripts": {
+    "build": "webpack --config ./webpack.config.js --mode production"
+  },
+  "main": "resources/Team.js",
+  "keywords": [
+    "rtc",
+    "jazz",
+    "team"
+  ],
+  "author": "Alexandra De Groof, Siemens",
+  "license": "MIT",
+  "dependencies": {
+    "jazz-update-site-webpack-plugin": "^0.4.1",
+    "webpack": "^4.17.0"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.1.0"
+  }
+}

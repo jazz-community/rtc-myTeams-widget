@@ -1,0 +1,20 @@
+<div class="com-siemens-bt-jazz-team-viewlet-web">
+    <div data-dojo-attach-point="_content" class="team tree myTeam"></div>
+    <div data-dojo-attach-point="_messageArea" class="message hidden"></div>
+    <div data-dojo-attach-point="_contentArea" class="loading-overlay hidden"></div>
+    <div class="footer" data-dojo-props='fixed:"bottom"'>
+        <div class="topMenu" style="float: right">
+            <a class="tab" style="float: right; text-decoration: none !important;"
+               dojoattachevent="onclick: buttonClicked" title="Change Team Filter">
+                <div data-dojo-attach-point="_pseudoButton" id="pseudoButton" style="display: block;"
+                     class="pseudoButton"></div>
+            </a>
+            <a class="tab" style="float: right; text-decoration: none !important;"
+               dojoattachevent="onclick: buttonRolesClicked" title="Change if Roles are displayed">
+                <div data-dojo-attach-point="_rolesButton" id="rolesButton" style="display: none;"
+                     class="pseudoButton"></div>
+            </a>
+        </div>
+    </div>
+    <div class="errorDisplay"></div>
+</div>
