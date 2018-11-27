@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+- 6
+script:
+- npm install
+- npm run build
+deploy:
+  provider: releases
+  api_key:
+    secure: mh3LOhZDXyP//Ec0StjhBwl8mZto3ed/9x36ZdrkGz7SBNjVoWhIqxCv4EAMQZQZGWaCg+Ll/m8afoy03DA3L8zGVOv57ulLc4QJid5xhxYY6z7xVUnyyr2MA5n+yR+feo0VOcoME3mZFNJgeLV11cSASl/Dx++AUV0T21vUj0LxEIZAeDZ/oQyANEEHJNQzG0qDjimeQQvYnGSN/ARKx1hOulO6CfqQqUQAFFnk6v6bZibOO1GolJeJunPOdUBT7UpoxW65Dfag5gmbt/HglRFinF9u6h0nkcvQYT7X8OA4xv7j4Ty1BjeuqWLHqR/N+jm0N9XQMVsk1Z5cKTL1RQY5psJtv08BBGK07TqF2pb1qrdqvR9oCSZFizSlZnn5RNlNP2y5T2EKurlPrL/qRwvHKa2gwlNo0HlLR8SUHm/vHVOnCgP5tQPEr/9WBXGKantNYF7p6JF5Uhvfq9iHYvEgMhv12a0TMzwzR/jDuCB71TEKQANI/C0W1SPNqb5C2NgIHgwlGdDC8E+JFwZ3aamgMh1QLWzHHgqJHwUBGkMtKbDOVNb5z2Bi7X9+10ibZ6Sz4iGgY36PEF42dqKgJlmPWXhmEX+s3/bDt1ePFzhroLnCT9Jy4V40U4xzBuynIgh3eEmkbr7qbmvy/roDiEVwsayctWjmCvY2DtRuWKA=
+  file: com.siemens.bt.jazz.viewlet.myteams*.zip
+  file_glob: true
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: jazz-community/rtc-myTeams-widget
