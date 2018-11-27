@@ -12,7 +12,7 @@ It has 3 possible States, easily changeable by clicking the corresponding Button
 2. Show only the Teams the user is part of without the Roles
 3. Show all Teams
 
-![Example Widget](resources/images/MyTeamsWRoles.png "The widget showing only 'my' Teams and Roles")
+![Example Widget](resources/images/MyTeamsWRoles.PNG "The widget showing only 'my' Teams and Roles")
 
 When showing only the Teams the user is part of the Project is displayed as well and all teams are included even if it's on a dashboard of a Subteam.
  Roles include the inherited ones.
@@ -47,7 +47,7 @@ Deploy just like any other update site:
 2. You may need to set a Project under Settings
 3. Under Settings you can configure the default State (my/all Teams, w/o Roles)
 
-![Settings](resources/images/Settings.png "The Settings(click red triangle to get there)")
+![Settings](resources/images/Settings.PNG "The Settings(click red triangle to get there)")
 
 # About this Plug-In
 ## Compatibility
