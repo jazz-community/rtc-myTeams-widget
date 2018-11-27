@@ -21,7 +21,7 @@ When showing only the Teams the user is part of the Project is displayed as well
 ## Setup
 
 ### Download
-You can find the latest release on the [releases page of this repository](../../realeases).
+You can find the latest release on the [releases page of this repository](../../releases).
 
 ### Installation
 Deploy just like any other update site:
