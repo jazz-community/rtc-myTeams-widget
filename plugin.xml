@@ -18,11 +18,11 @@
                 editable="false"
                 gadgetable="true"
                 include-subteams="yes-and-check"
-                icon="resources/images/teamarea_obj.gif"
+                icon=""
                 id="com.siemens.bt.jazz.viewlet.myteams"
                 title="My Teams"
                 widget="com.siemens.bt.jazz.viewlet.myteams.Team"
-                version="1.1"
+                version="1.2"
                 scope-sensitive="true">
             <preference-def
                     default-value="true"
@@ -46,7 +46,6 @@
         <viewlet-entry
                 category="com.siemens.bt.jazz.viewlet.category.btaddons"
                 id="com.siemens.bt.jazz.viewlet.myteams.entry.Team"
-                icon="resources/images/teamarea_obj.gif"
                 title="My Teams"
                 non-jts="true"
                 repo-only="true"

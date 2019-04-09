@@ -9,9 +9,7 @@ define(["dojo/_base/declare",
     "dojo/promise/all",
     "dojo/when",
     "./jazzUtilities/SiemensWidget",
-    "jazz.ui.ResourceLink",
-    "jazz.ui.ModeledTree",
-    "jazz.ui.tree.AbstractItem", //this will log as error, but has be so until jazz adapts amd (dojo 1.7+)
+    "com.ibm.team.dashboard.viewlets.web.ui.internal.TeamsViewlet", //logs as error, but has to be like this(Old code loads modules differently)
     "com.ibm.team.dashboard.viewlets.web.client.internal.TeamsClient",
     "com.ibm.team.dashboard.web.util.DashboardUtil",
     "dojox.xml.parser",
@@ -22,64 +20,11 @@ define(["dojo/_base/declare",
     var DashboardUtil = com.ibm.team.dashboard.web.util.DashboardUtil;
     var TeamsClient = com.ibm.team.dashboard.viewlets.web.client.internal.TeamsClient;
     var ServiceResponseHandler = com.ibm.team.repository.web.transport.ServiceResponseHandler;
-    var modeledTree = jazz.ui.ModeledTree;
-    var AbstractItem = jazz.ui.tree.AbstractItem;
-    var SimpleItem = jazz.ui.tree.SimpleItem;
     var LinkItem = jazz.ui.ResourceLink;
+    var TeamsViewlet = com.ibm.team.dashboard.viewlets.web.ui.internal.TeamsViewlet;
 
-    var TeamResourceTreeItem = declare(AbstractItem, {
-        postCreate: function () {
-            this.inherited(arguments);
 
-            this.rl = new LinkItem({
-                uri: this._getResourceURL(),
-                presentationUri: this._getPresenationURL(),
-                label: jazz.util.html.escape(this.team.name),
-                isExternalContent: false,
-                lazyFetch: true
-            });
-            this.domNode = this.rl.domNode;
-        },
-
-        _getResourceURL: function () {
-            // e.g.
-            // https://localhost:9443/jazz/process/project-areas/_WOqPMDujEeCIDJ7vsnU5zQ/team-areas/_Tj9RkDulEeCAZ5rY1YKmyQ
-
-            var url = this.webURL +
-                "/process/project-areas/" +
-                this.project.itemId +
-                "/team-areas/" +
-                this.team.itemId;
-
-            if (djConfig.isDebug) {
-                url = url + "?debug=true";
-            }
-
-            return url;
-        },
-
-        _getPresenationURL: function () {
-            // e.g.
-            // https://localhost:9443/jazz/web/projects/Jazz%20Project#action=com.ibm.team.dashboard.viewDashboard&team=Foundation
-
-            return DashboardUtil.getDashboardHref(DashboardConstants.SCOPE_TEAM_AREA,
-                this.team.path,
-                null,
-                this.project.name,
-                this.webURL);
-        },
-
-        getId: function () {
-            return this.team.itemId;
-        },
-
-        uninitialize: function () {
-            this.rl.destroy();
-        }
-
-    });
-
-    return declare("com.siemens.bt.jazz.viewlet.myteams.Team", SiemensWidget, {
+    return declare("com.siemens.bt.jazz.viewlet.myteams.Team", [SiemensWidget, TeamsViewlet], {
         templatePath: require.toUrl("./templates/Team.html", "./templates/Team.css"),
 
         //change between filtered/not
@@ -115,79 +60,6 @@ define(["dojo/_base/declare",
 
         },
 
-
-        getTAsUnfiltered: function () {
-            var serviceObj = {
-                self: this,
-                success: function (result) {
-                    if (!result || !result.children || result.children.length === 0) {
-                        this.self.getSite().setSecondaryTitle("");
-                        this.self._content.innerHTML = this.self.getScope() === DashboardConstants.SCOPE_PROJECT_AREA ?
-                            "There are no teams for this project area." : "There are no sub-teams for this team area.";
-                    } else {
-                        this.self._checkTeams(result.children);
-                        this.self.getSite().setSecondaryTitle("(" + this.self._count + ")");
-                        var useLinks = this.self.getSite().canViewDashboard(DashboardConstants.SCOPE_TEAM_AREA);
-                        var webURL = this.self.getWebURL();
-                        var param = {
-                            model: result.children, selection: false,
-                            createTreeItem: function (obj) {
-                                if (useLinks) {
-                                    return new TeamResourceTreeItem({
-                                        team: obj,
-                                        project: {
-                                            name: result.projectName,
-                                            itemId: result.projectItemId
-                                        },
-                                        webURL: webURL
-                                    });
-                                }
-                                return new SimpleItem({
-                                    label: html.escape(obj.name), itemId: obj.itemId, getId: function () {
-                                        return this.itemId;
-                                    }
-                                });
-                            },
-                            onStateChange: dojo.hitch(this.self, this.self._treeStateChanged)
-                        };
-                        this.self._teamsTree = new modeledTree(param);
-                        var oldState = this.self.getContributorState().get("treeState");
-                        if (oldState && this.self.getScope() === this.self.getContributorState().get("scope") &&
-                            this.self.getScopeItem().itemId === this.self.getContributorState().get("scopeItemId")) {
-                            this.self._teamsTree.restoreState(oldState);
-                        }
-                        this.self._content.appendChild(this.self._teamsTree.domNode);
-                    }
-                },
-                failure: function (errorObj) {
-                    // read permission
-                    if (errorObj && errorObj.status === 403) {
-                        var span = document.createElement("span");
-                        span.className = "errorText";
-                        var message = this.self._getOperationalErrorText("yey",
-                            "yay",
-                            "yuy"); //permission denied messages
-                        span.appendChild(document.createTextNode(message));
-                        this.self._content.innerHTML = "";
-                        this.self._content.appendChild(span);
-                        this.self.getSite().setSecondaryTitle("");
-                        //this.self.getSite().setLoading(false);
-                        //this.self.getSite().doneRefresh();
-                    }
-                    else {
-                        //this.self.getSite().doneRefresh();
-                        this.self.getSite().error(errorObj);
-                    }
-                }
-            }; //callback with success/failure for rest call
-            var srh = new ServiceResponseHandler(serviceObj, "success", "failure");
-
-            if (this.getScope() === DashboardConstants.SCOPE_PROJECT_AREA)
-                TeamsClient.getTeamsForProjectArea(this.getScopeItem().itemId, this.getScopeSubteams(), srh, this.getServiceTracker());
-            else
-                TeamsClient.getTeamsForTeamArea(this.getScopeItem().itemId, this.getScopeSubteams(), srh, this.getServiceTracker());
-        },
-
         _getRolesAsXML: function () {
             return jazz.client.xhrGet({
                 url: this.webURL +
@@ -197,6 +69,7 @@ define(["dojo/_base/declare",
                 return result;
             });
         },
+
         refresh: function () {
 
             this.debugMessage("refresh()");
@@ -259,7 +132,7 @@ define(["dojo/_base/declare",
             else {
                 this._pseudoButton.innerHTML = "Show only my Teams";
                 domStyle.set(this._rolesButton, 'display', 'none');
-                this.getTAsUnfiltered();
+                this.inherited(arguments);
             }
             this._updateTitle();
             this.update();
@@ -267,26 +140,7 @@ define(["dojo/_base/declare",
             this.getSite().doneRefresh();
 
         },
-        _getOperationalErrorText: function (message, explanation, useraction) {
-            return message + " " +
-                explanation + " " +
-                useraction;
-        },
 
-        _checkTeams: function (teams) {
-            this._count = 0;
-            this._checkSubTeams(teams);
-        },
-
-        _checkSubTeams: function (teams) {
-            this._count += teams.length;
-            teams.sort(this._sortTeams);
-            for (var i = 0; i < teams.length; i++) {
-                if (teams[i].children) {
-                    this._checkSubTeams(teams[i].children);
-                }
-            }
-        },
 
         _createNoScopeMsg: function () {
             domStyle.set('pseudoButton', 'display', 'none');
@@ -348,15 +202,6 @@ define(["dojo/_base/declare",
             }
             else
                 this.update();
-        },
-
-        _treeStateChanged: function () {
-            var state = this._teamsTree.getState();
-            this.getContributorState().set("treeState", state);
-            if (this.getContributorState().get("scope") !== this.getScope())
-                this.getContributorState().set("scope", this.getScope());
-            if (this.getContributorState().get("scopeItemId") !== this.getScopeItem().itemId)
-                this.getContributorState().set("scopeItemId", this.getScopeItem().itemId);
         },
 
         _updateTitle: function () {
@@ -498,7 +343,8 @@ define(["dojo/_base/declare",
                     var dashBoardUri = DashboardUtil.getDashboardHref(DashboardConstants.SCOPE_PROJECT_AREA,
                         pname,
                         null,
-                        pname);
+                        pname,
+                        net.jazz.ajax.BootstrapProperties.FRONTSIDE_URL);
                     var teamLink = new LinkItem({
                         uri: popUpUri,
                         label: pname,
@@ -545,7 +391,8 @@ define(["dojo/_base/declare",
                             var dashBoardUri = DashboardUtil.getDashboardHref(DashboardConstants.SCOPE_TEAM_AREA,
                                 path,
                                 null,
-                                pname);
+                                pname,
+                                net.jazz.ajax.BootstrapProperties.FRONTSIDE_URL);
                             var teamLink = new LinkItem({
                                 uri: popUpUri,
                                 label: name,

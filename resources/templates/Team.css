@@ -49,18 +49,6 @@
 }
 
 
-.teamIcon {
-    background-image: url("../images/teamarea_obj.gif");
-    height: 16px;
-    width: 16px;
-}
-
-.projectIcon {
-    background-image: url("../images/projectarea_obj.gif");
-    height: 16px;
-    width: 16px;
-}
-
 .right {
     overflow: auto;
 }
@@ -96,7 +84,6 @@
 }
 
 .cMenuContent{
-    background-image: url("../images/teamarea_obj.gif");
     background-color: gray;
     width: 20px;
     height: 20px;
