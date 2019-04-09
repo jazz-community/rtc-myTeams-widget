@@ -1,27 +1,25 @@
+[![travis-svg][travis-svg]][travis]
+
 # My Teams Widget for RTC
 
-This widget expands the standard Teams widget with an option to filter
-for only the teams the authenticated user is part of. It can also show the roles.
-The widget is intended to allow users a quick navigation and better overview, especially
+This widget expands the standard RTC Teams widget with an option to only show the teams the authenticated user is part of. It can also show the users roles. The widget is intended to allow users a quick navigation and better overview, especially
 when there are a lot of teams.
 
 ## States
-
-It has 3 possible States, easily changeable by clicking the corresponding Buttons:
+The widget offers three different states, easily changeable by clicking the corresponding buttons:
 1. Show only the Teams the user is part of and the roles he has
 2. Show only the Teams the user is part of without the Roles
 3. Show all Teams
 
 ![Example Widget](resources/images/MyTeamsWRoles.PNG "The widget showing only 'my' Teams and Roles")
 
-When showing only the Teams the user is part of the Project is displayed as well and all teams are included even if it's on a dashboard of a Subteam.
- Roles include the inherited ones.
-
+- When showing only the Teams the user is part of, the Project is displayed as well and all teams are included even if it's on a dashboard of a Subteam.
+- The users roles also include inherited roles.
 
 ## Setup
 
 ### Download
-You can find the latest release on the [releases page of this repository](../../realeases).
+You can find the latest release on the [releases page of this repository](../../releases).
 
 ### Installation
 Deploy just like any other update site:
@@ -43,16 +41,13 @@ Deploy just like any other update site:
 
 ### Configuration
 
-1. Add the Widget to a Dashboard. You can find it under "Project/Team"
-2. You may need to set a Project under Settings
-3. Under Settings you can configure the default State (my/all Teams, w/o Roles)
+1. Add the Widget to a Dashboard. The widget can be found in the **"Project/Team"** category.
+2. In the settings section of the added widget, make sure that a project or team area is assigned.
+3. Under Settings, the default State (my/all Teams, w/o Roles) can be optionally configured.
 
 ![Settings](resources/images/Settings.PNG "The Settings(click red triangle to get there)")
 
 # About this Plug-In
-## Compatibility
-This plug-in has been verified to work on RTC 6.0.3 and onward. According to our information, the mechanism for creating non-attribute-based presentations has not changed since one of the first releases of RTC, so we expect it to work with any version of RTC. If not, we would appreciate your feedback.
-
 ## Contributing
 Please use the [Issue Tracker](../../issues) of this repository to report issues or suggest enhancements.
 
@@ -61,3 +56,6 @@ For general contribution guidelines, please refer to [CONTRIBUTING.md](https://g
 ## Licensing
 Copyright (c) Siemens AG. All rights reserved.<br>
 Licensed under the [MIT](./LICENSE) License.
+
+[travis-svg]: https://travis-ci.org/jazz-community/rtc-myTeams-widget.svg?branch=master
+[travis]: https://travis-ci.org/jazz-community/rtc-myTeams-widget
