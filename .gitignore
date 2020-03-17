@@ -5,7 +5,7 @@
 .project
 .idea/
 .vscode/
-/com.siemens.bt.jazz.workitemeditor.rtcEmailWorkItemAction*.zip
+/com.siemens.bt.jazz.viewlet.myteams*.zip
 deployment-properties.ini
 dist/
 jbe-build-wrapper.xml
